@@ -37,18 +37,25 @@ tasky list
 
 ### Mark a Task as Done
 ```bash
-tasky done <task_id>
+tasky done {{task_id}}
 ```
 
 ### Delete a Task
 ```bash
-tasky delete <task_id>
+tasky delete {{task_id}}
 ```
 
 ### Clear All Tasks
 ```bash
 tasky clear
 ```
+
+## Deactivating the Virtual Environment
+Once you're done working, you can deactivate the virtual environment with the following command:
+```bash
+deactivate
+```
+
 
 ## License
 MIT License
