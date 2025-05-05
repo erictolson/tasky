@@ -1,4 +1,3 @@
-from prometheus_client import start_http_server, Gauge
 import sys
 from task_manager import add_task, list_tasks, mark_done, delete_task, clear_tasks
 
@@ -10,14 +9,7 @@ def print_usage():
     print("  python main.py delete <task_id>")
     print("  python main.py clear")
 
-# Prometheus metrics
-total_tasks = Gauge("tasky_total_tasks", "Total number of tasks")
-completed_tasks = Gauge("tasky_completed_tasks", "Number of completed tasks")
-pending_tasks = Gauge("tasky_pending_tasks", "Number of pending tasks")
-
 def main():
-    start_http_server(8000)  # Exposes metrics on localhost:8000
-
     if len(sys.argv) < 2:
         print_usage()
         return
@@ -33,7 +25,7 @@ def main():
         print(f"Added task #{task_id}: {task_desc}")
 
     elif command == "list":
-        tasks = list_tasks(total_tasks, completed_tasks, pending_tasks)
+        tasks = list_tasks()
         if not tasks:
             print("No tasks found.")
         else:

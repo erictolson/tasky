@@ -29,18 +29,9 @@ def add_task(title):
     logger.info(f"Added task #{task_id}: {title}")
     return task_id
 
-def list_tasks(total_tasks, completed_tasks, pending_tasks):
+def list_tasks():
     tasks = load_tasks()
-    
-    # Update Prometheus metrics
-    total_tasks.set(len(tasks))  # Set the total task count
-    completed = sum(1 for task in tasks if task["done"])
-    completed_tasks.set(completed)  # Set the completed task count
-    pending_tasks.set(len(tasks) - completed)  # Set the pending task count
-
     return tasks
-
-
 
 def mark_done(task_id):
     tasks = load_tasks()
@@ -70,4 +61,3 @@ def delete_task(task_id):
 def clear_tasks():
     logger.info("Clearing all tasks")
     save_tasks([])
-    
