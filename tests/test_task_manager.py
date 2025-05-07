@@ -1,6 +1,7 @@
 import unittest
 from task_manager import add_task, list_tasks, clear_tasks
 
+
 class TaskManagerTest(unittest.TestCase):
 
     def setUp(self):
@@ -12,5 +13,6 @@ class TaskManagerTest(unittest.TestCase):
         self.assertEqual(len(tasks), 1)
         self.assertEqual(tasks[0]["title"], "Test Task")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

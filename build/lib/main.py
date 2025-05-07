@@ -1,7 +1,6 @@
 import sys
 from task_manager import add_task, list_tasks, mark_done, delete_task, clear_tasks
 
-
 def print_usage():
     print("Usage:")
     print("  python main.py add <task description>")
@@ -9,7 +8,6 @@ def print_usage():
     print("  python main.py done <task_id>")
     print("  python main.py delete <task_id>")
     print("  python main.py clear")
-
 
 def main():
     if len(sys.argv) < 2:
@@ -62,7 +60,6 @@ def main():
     else:
         print(f"Unknown command: {command}")
         print_usage()
-
 
 if __name__ == "__main__":
     main()

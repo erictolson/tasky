@@ -4,7 +4,6 @@ from logger import logger
 
 TASKS_FILE = "tasks.json"
 
-
 def load_tasks():
     if not os.path.exists(TASKS_FILE):
         return []
@@ -22,7 +21,6 @@ def save_tasks(tasks):
     with open(TASKS_FILE, "w") as f:
         json.dump(tasks, f, indent=2)
 
-
 def add_task(title):
     tasks = load_tasks()
     task_id = max([t["id"] for t in tasks], default=0) + 1
@@ -31,11 +29,9 @@ def add_task(title):
     logger.info(f"Added task #{task_id}: {title}")
     return task_id
 
-
 def list_tasks():
     tasks = load_tasks()
     return tasks
-
 
 def mark_done(task_id):
     tasks = load_tasks()
@@ -52,7 +48,6 @@ def mark_done(task_id):
         logger.warning(f"Task #{task_id} not found")
     return found
 
-
 def delete_task(task_id):
     tasks = load_tasks()
     new_tasks = [t for t in tasks if t["id"] != task_id]
@@ -62,7 +57,6 @@ def delete_task(task_id):
     else:
         logger.warning(f"Task #{task_id} not found")
     return len(new_tasks) < len(tasks)
-
 
 def clear_tasks():
     logger.info("Clearing all tasks")
