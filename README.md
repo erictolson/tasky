@@ -56,6 +56,32 @@ Once you're done working, you can deactivate the virtual environment with the fo
 deactivate
 ```
 
+## Development
+
+For development, you can use the following commands:
+
+### Formatting Code
+To format the code using `black`:
+```bash
+make format
+```
+
+### Running Tests
+To run the tests::
+```bash
+make test
+```
+
+### Running Tests
+To run the tests::
+```bash
+make test
+```
+
+### Make sure to install the development dependencies first:
+```bash
+pip install .[dev]
+```
 
 ## License
 MIT License
