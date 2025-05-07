@@ -1,7 +1,0 @@
-Metadata-Version: 2.4
-Name: tasky
-Version: 0.1
-Provides-Extra: dev
-Requires-Dist: black; extra == "dev"
-Requires-Dist: flake8; extra == "dev"
-Dynamic: provides-extra

@@ -1,3 +1,0 @@
-logger
-main
-task_manager
