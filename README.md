@@ -1,5 +1,7 @@
 # Tasky
 
+![Run Python tests](https://github.com/erictolson/tasky/actions/workflows/test.yml/badge.svg)
+
 Tasky is a simple command-line task manager for managing your tasks.
 
 ## Installation
