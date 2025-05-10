@@ -1,8 +1,16 @@
-# Tasky
+# Tasky 📝
 
-Tasky is a simple command-line task manager for managing your tasks.
+Tasky is a simple command-line task manager built in Python — great for learning CLI app development and DevOps basics.
 
-## Installation
+## 🚀 Features
+
+- Add, list, and manage tasks from your terminal
+- Logging and simple metrics tracking
+- Works in both virtual environments and Docker
+
+---
+
+## 🧪 Local Installation (Virtual Environment)
 
 1. Clone the repository:
     ```bash
@@ -13,75 +21,99 @@ Tasky is a simple command-line task manager for managing your tasks.
 2. Set up a virtual environment:
     ```bash
     python3 -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
 
-3. Install dependencies:
+3. Install the app:
     ```bash
     pip install .
     ```
 
-## Usage
+4. When you're done working:
+    ```bash
+    deactivate
+    ```
 
-Once installed, you can use the `tasky` command to interact with your tasks. Here are the available commands:
-
-### Add a Task
+### Example Usage
 ```bash
-tasky add "Your task description"
-```
-
-### List All Tasks
-```bash
+tasky add "Write better docs"
 tasky list
-```
-
-### Mark a Task as Done
-```bash
-tasky done {{task_id}}
-```
-
-### Delete a Task
-```bash
-tasky delete {{task_id}}
-```
-
-### Clear All Tasks
-```bash
 tasky clear
 ```
 
-## Deactivating the Virtual Environment
-Once you're done working, you can deactivate the virtual environment with the following command:
-```bash
-deactivate
-```
+---
 
-## Development
+## 🐳 Running in Docker (Recommended for DevOps Workflow)
 
-For development, you can use the following commands:
+1. Build the image:
+    ```bash
+    docker build -t tasky .
+    ```
 
-### Formatting Code
-To format the code using `black`:
+2. Run an interactive container:
+    ```bash
+    docker run -it --name tasky-dev tasky
+    ```
+
+3. Inside the container, use Tasky just like locally:
+    ```bash
+    tasky add "Dockerize the CLI"
+    tasky list
+    ```
+
+4. Exit:
+    ```bash
+    exit
+    ```
+
+5. Restart the container later:
+    ```bash
+    docker start -ai tasky-dev
+    ```
+
+> You can also **persist your task data** by mounting a volume:
+> ```bash
+> docker run -it --name tasky-dev -v $PWD/tasks.json:/app/tasks.json tasky
+> ```
+> This ensures your tasks are saved between container runs.
+
+---
+
+## 💠 Development
+
+### Format the Code
 ```bash
 make format
 ```
 
-### Running Tests
-To run the tests::
+### Run Tests
 ```bash
 make test
 ```
 
-### Running Tests
-To run the tests::
-```bash
-make test
-```
-
-### Make sure to install the development dependencies first:
+### Install Dev Dependencies
 ```bash
 pip install .[dev]
 ```
 
-## License
+---
+
+## 📁 Project Structure
+
+```
+.
+├── main.py              # Entry point
+├── task_manager.py      # Task logic
+├── logger.py            # Logging/metrics
+├── setup.py             # CLI setup
+├── Dockerfile
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+---
+
+## 📄 License
+
 MIT License

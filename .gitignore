@@ -1,6 +1,15 @@
+# Ignore venv and Python cache
 venv/
 __pycache__/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+
+# Ignore logs and task data
 *.log
 tasks.json
-build/
-tasky.egg-info/
+
+# Ignore Docker stuff
+*.tar
