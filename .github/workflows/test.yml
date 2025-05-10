@@ -40,14 +40,19 @@ jobs:
         source venv/bin/activate
         python -m unittest discover tests
 
-  docker-build:
+  docker-run:
     runs-on: ubuntu-latest
-    name: Build Docker image
+    needs: docker-build
+    name: Run Tasky CLI in Docker
 
     steps:
     - name: Check out code
       uses: actions/checkout@v3
 
     - name: Build Docker image
+      run: docker build -t tasky .
+
+    - name: Run tasky CLI commands
       run: |
-        docker build -t tasky .
+        docker run --rm tasky tasky add "This is a CI test"
+        docker run --rm tasky tasky list
