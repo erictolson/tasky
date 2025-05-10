@@ -40,6 +40,18 @@ jobs:
         source venv/bin/activate
         python -m unittest discover tests
 
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build Docker image
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: |
+        docker build -t tasky .
+
   docker-run:
     runs-on: ubuntu-latest
     needs: docker-build
