@@ -5,17 +5,18 @@ WORKDIR /app
 # Create non-root user
 RUN useradd -ms /bin/bash taskyuser
 
-# Copy source code first (still as root)
+# Copy source and fix permissions
 COPY . .
-
-# Fix permissions for build dir and /app
 RUN mkdir -p /app/build && chown -R taskyuser:taskyuser /app
 
 # Switch to non-root user
 USER taskyuser
 
-# Install your CLI tool
+# Add user's local bin to PATH so pip-installed CLI tools are available
+ENV PATH="/home/taskyuser/.local/bin:$PATH"
+
+# Install the CLI tool
 RUN pip install .
 
-# Start a bash shell by default
+# Default to bash shell
 CMD ["/bin/bash"]
