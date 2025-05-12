@@ -1,67 +1,53 @@
-import sys
-from task_manager import add_task, list_tasks, mark_done, delete_task, clear_tasks
-
-
-def print_usage():
-    print("Usage:")
-    print("  python main.py add <task description>")
-    print("  python main.py list")
-    print("  python main.py done <task_id>")
-    print("  python main.py delete <task_id>")
-    print("  python main.py clear")
+import argparse
+import db
+import logger
 
 
 def main():
-    if len(sys.argv) < 2:
-        print_usage()
-        return
+    parser = argparse.ArgumentParser(description="Tasky CLI Task Manager")
+    subparsers = parser.add_subparsers(dest="command")
 
-    command = sys.argv[1]
+    # Add task
+    parser_add = subparsers.add_parser("add", help="Add a new task")
+    parser_add.add_argument("description", type=str, help="Task description")
 
-    if command == "add":
-        if len(sys.argv) < 3:
-            print("Error: No task description provided.")
-            return
-        task_desc = " ".join(sys.argv[2:])
-        task_id = add_task(task_desc)
-        print(f"Added task #{task_id}: {task_desc}")
+    # List tasks
+    subparsers.add_parser("list", help="List all tasks")
 
-    elif command == "list":
-        tasks = list_tasks()
+    # Delete task
+    parser_delete = subparsers.add_parser("delete", help="Delete a task")
+    parser_delete.add_argument("task_id", type=int, help="ID of the task to delete")
+
+    # Clear all tasks
+    subparsers.add_parser("clear", help="Clear all tasks")
+
+    args = parser.parse_args()
+
+    # Initialize database
+    db.init_db()
+
+    if args.command == "add":
+        db.add_task(args.description)
+        logger.log("add", args.description)
+
+    elif args.command == "list":
+        tasks = db.list_tasks()
         if not tasks:
             print("No tasks found.")
-        else:
-            for task in tasks:
-                status = "✅" if task["done"] else "❌"
-                print(f"{task['id']:>3}. {status} {task['title']}")
+        for task in tasks:
+            print(f"{task['id']}. {task['description']} {'[x]' if task['completed'] else ''}")
+        logger.log("list", f"{len(tasks)} task(s)")
 
-    elif command == "done":
-        if len(sys.argv) < 3 or not sys.argv[2].isdigit():
-            print("Error: Provide a task ID to mark as done.")
-            return
-        task_id = int(sys.argv[2])
-        if mark_done(task_id):
-            print(f"Task #{task_id} marked as done.")
-        else:
-            print(f"Task #{task_id} not found.")
+    elif args.command == "delete":
+        db.delete_task(args.task_id)
+        logger.log("delete", f"Task {args.task_id}")
 
-    elif command == "delete":
-        if len(sys.argv) < 3 or not sys.argv[2].isdigit():
-            print("Error: Provide a task ID to delete.")
-            return
-        task_id = int(sys.argv[2])
-        if delete_task(task_id):
-            print(f"Deleted task #{task_id}.")
-        else:
-            print(f"Task #{task_id} not found.")
-
-    elif command == "clear":
-        clear_tasks()
-        print("All tasks cleared.")
+    elif args.command == "clear":
+        db.clear_tasks()
+        logger.log("clear", "All tasks cleared")
 
     else:
-        print(f"Unknown command: {command}")
-        print_usage()
+        parser.print_help()
 
 
 if __name__ == "__main__":

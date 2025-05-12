@@ -73,9 +73,9 @@ tasky clear
 
 > You can also **persist your task data** by mounting a volume:
 > ```bash
-> docker run -it --name tasky-dev -v $PWD/tasks.json:/app/tasks.json tasky
+> docker run -it --name tasky-dev -v $PWD/tasks.db:/app/tasks.db tasky
 > ```
-> This ensures your tasks are saved between container runs.
+> This ensures your task database is saved between container runs.
 
 ---
 
@@ -103,7 +103,7 @@ pip install .[dev]
 ```
 .
 ├── main.py              # Entry point
-├── task_manager.py      # Task logic
+├── db.py                # SQLite logic
 ├── logger.py            # Logging/metrics
 ├── setup.py             # CLI setup
 ├── Dockerfile

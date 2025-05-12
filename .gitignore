@@ -9,7 +9,9 @@ dist/
 
 # Ignore logs and task data
 *.log
-tasks.json
 
 # Ignore Docker stuff
 *.tar
+
+# SQLite database file
+tasks.db

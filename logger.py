@@ -1,17 +1,13 @@
 import logging
+from datetime import datetime
 
-# Configure logger
-logger = logging.getLogger("tasky")
-logger.setLevel(logging.INFO)
+# Configure logging
+logging.basicConfig(
+    filename="tasky.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
-# File handler
-file_handler = logging.FileHandler("tasky.log")
-file_handler.setLevel(logging.INFO)
-
-# Formatter
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-file_handler.setFormatter(formatter)
-
-# Add handler if not already added
-if not logger.hasHandlers():
-    logger.addHandler(file_handler)
+def log(action, message):
+    logging.info(f"{action.upper()}: {message}")
