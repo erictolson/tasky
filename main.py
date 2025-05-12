@@ -35,7 +35,9 @@ def main():
         if not tasks:
             print("No tasks found.")
         for task in tasks:
-            print(f"{task['id']}. {task['description']} {'[x]' if task['completed'] else ''}")
+            print(
+                f"{task['id']}. {task['description']} {'[x]' if task['completed'] else ''}"
+            )
         logger.log("list", f"{len(tasks)} task(s)")
 
     elif args.command == "delete":
