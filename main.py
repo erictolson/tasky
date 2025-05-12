@@ -35,10 +35,10 @@ def main():
         if not tasks:
             print("No tasks found.")
         for task in tasks:
-            print(
-                f"{task['id']}. {task['description']} {'[x]' if task['completed'] else ''}"
-            )
-        logger.log("list", f"{len(tasks)} task(s)")
+            task_status = "[x]" if task["completed"] else ""
+            print(f"{task['id']}. {task['description']} {task_status}")
+        count_msg = f"{len(tasks)} task(s)"
+        logger.log("list", count_msg)
 
     elif args.command == "delete":
         db.delete_task(args.task_id)
