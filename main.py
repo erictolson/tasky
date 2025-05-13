@@ -15,15 +15,15 @@ def main():
     subparsers.add_parser("list", help="List all tasks")
 
     # Delete task
-    parser_delete = subparsers.add_parser("delete", help="Delete a task")
-    parser_delete.add_argument("task_id", type=int, help="ID of the task to delete")
+    parser_delete = subparsers.add_parser("delete", help="Delete a task by position")
+    parser_delete.add_argument("task_id", type=int, help="Position of the task to delete")
 
     # Clear all tasks
     subparsers.add_parser("clear", help="Clear all tasks")
 
     # Mark task as done
-    parser_done = subparsers.add_parser("done", help="Mark a task as completed")
-    parser_done.add_argument("task_id", type=int, help="ID of the task to mark as done")
+    parser_done = subparsers.add_parser("done", help="Mark a task as completed by position")
+    parser_done.add_argument("task_id", type=int, help="Position of the task to mark as done")
 
     args = parser.parse_args()
 
@@ -38,22 +38,33 @@ def main():
         tasks = db.list_tasks()
         if not tasks:
             print("No tasks found.")
-        for task in tasks:
-            status = "✔" if task["completed"] else " "
-            print(f"[{status}] {task['id']}. {task['description']}")
-        logger.log("list", f"{len(tasks)} task(s)")
+        else:
+            for i, task in enumerate(tasks, 1):
+                status = "✔" if task["completed"] else " "
+                print(f"[{status}] {i}. {task['description']}")
+            logger.log("list", f"{len(tasks)} task(s)")
 
     elif args.command == "delete":
-        db.delete_task(args.task_id)
-        logger.log("delete", f"Task {args.task_id}")
+        tasks = db.list_tasks()
+        try:
+            task = tasks[args.task_id - 1]
+            db.delete_task(task["id"])
+            logger.log("delete", f"Deleted task {task['id']}")
+        except IndexError:
+            print(f"No task at position {args.task_id}")
 
     elif args.command == "clear":
         db.clear_tasks()
         logger.log("clear", "All tasks cleared")
 
     elif args.command == "done":
-        db.mark_task_done(args.task_id)
-        logger.log("done", f"Marked task {args.task_id} as completed")
+        tasks = db.list_tasks()
+        try:
+            task = tasks[args.task_id - 1]
+            db.mark_task_done(task["id"])
+            logger.log("done", f"Marked task {task['id']} as completed")
+        except IndexError:
+            print(f"No task at position {args.task_id}")
 
     else:
         parser.print_help()
