@@ -16,14 +16,20 @@ def main():
 
     # Delete task
     parser_delete = subparsers.add_parser("delete", help="Delete a task by position")
-    parser_delete.add_argument("task_id", type=int, help="Position of the task to delete")
+    parser_delete.add_argument(
+        "task_id", type=int, help="Position of the task to delete"
+    )
 
     # Clear all tasks
     subparsers.add_parser("clear", help="Clear all tasks")
 
     # Mark task as done
-    parser_done = subparsers.add_parser("done", help="Mark a task as completed by position")
-    parser_done.add_argument("task_id", type=int, help="Position of the task to mark as done")
+    parser_done = subparsers.add_parser(
+        "done", help="Mark a task as completed by position"
+    )
+    parser_done.add_argument(
+        "task_id", type=int, help="Position of the task to mark as done"
+    )
 
     args = parser.parse_args()
 
