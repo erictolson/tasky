@@ -36,9 +36,25 @@ Tasky is a simple command-line task manager built in Python — great for learni
 
 ### Example Usage
 ```bash
-tasky add "Write better docs"
+# Add a task
+tasky add "Write documentation"
+
+# List tasks
 tasky list
+
+# Mark a task as done (by position)
+tasky done 1
+
+# Delete a task (by position)
+tasky delete 1
+
+# Clear all tasks
 tasky clear
+
+# Show help for all commands
+tasky --help
+tasky add --help
+tasky done --help
 ```
 
 ---

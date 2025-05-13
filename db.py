@@ -45,3 +45,8 @@ def clear_tasks():
     with get_connection() as conn:
         conn.execute("DELETE FROM tasks")
         conn.commit()
+
+def mark_task_done(task_id):
+    with get_connection() as conn:
+        conn.execute("UPDATE tasks SET completed = 1 WHERE id = ?", (task_id,))
+        conn.commit()

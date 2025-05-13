@@ -21,6 +21,10 @@ def main():
     # Clear all tasks
     subparsers.add_parser("clear", help="Clear all tasks")
 
+    # Mark task as done
+    parser_done = subparsers.add_parser("done", help="Mark a task as completed")
+    parser_done.add_argument("task_id", type=int, help="ID of the task to mark as done")
+
     args = parser.parse_args()
 
     # Initialize database
@@ -35,10 +39,9 @@ def main():
         if not tasks:
             print("No tasks found.")
         for task in tasks:
-            task_status = "[x]" if task["completed"] else ""
-            print(f"{task['id']}. {task['description']} {task_status}")
-        count_msg = f"{len(tasks)} task(s)"
-        logger.log("list", count_msg)
+            status = "✔" if task["completed"] else " "
+            print(f"[{status}] {task['id']}. {task['description']}")
+        logger.log("list", f"{len(tasks)} task(s)")
 
     elif args.command == "delete":
         db.delete_task(args.task_id)
@@ -47,6 +50,10 @@ def main():
     elif args.command == "clear":
         db.clear_tasks()
         logger.log("clear", "All tasks cleared")
+
+    elif args.command == "done":
+        db.mark_task_done(args.task_id)
+        logger.log("done", f"Marked task {args.task_id} as completed")
 
     else:
         parser.print_help()
